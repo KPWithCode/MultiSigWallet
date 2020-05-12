@@ -48,14 +48,14 @@ function approveTransfer(uint id) external onlyApprover {
 receive() external payable {}
 
 // custom modifer to restrict transfers
-modifier onlyApprover() {
-    bool allowed = false;
-    for(uint i = 0; i < approvers.length; i++) {
-        if(approvers[i] == msg.sender) {
-            allowed = true;
+    modifier onlyApprover() {
+        bool allowed = false;
+        for(uint i = 0; i < approvers.length; i++) {
+            if(approvers[i] == msg.sender) {
+                allowed = true;
+            }
         }
+        require(allowed == true, 'only approver is allowed');
+        _;
     }
-    require(allowed == true, 'only approver is allowed');
-    _;
-}
 }
