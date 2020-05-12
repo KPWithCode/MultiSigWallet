@@ -1,6 +1,6 @@
 //  "^" specifies version of solidity used
 pragma solidity ^0.6.0;
-
+pragma experimental ABIEncoderV2;
 contract Wallet {
     address[] public approvers;
     uint public quorum;
@@ -12,13 +12,17 @@ contract Wallet {
         bool sent;
     }
     Transfer[] public transfers;
-
+    // Nested mapping
+    mapping(address => mapping(uint => bool)) public approvals;
     constructor(address[] memory _approvers, uint _quorum) public {
         approvers = _approvers;
         quorum = _quorum;
     }
     function getApprovers() external view returns(address[] memory) {
         return approvers;
+    }
+    function getTransfers()  external view returns(Transfer[] memory) {
+        return transfers;
     }
 function createTransfer(uint amount, address payable to) external {
     transfers.push(Transfer(
@@ -29,3 +33,15 @@ function createTransfer(uint amount, address payable to) external {
       false
     ));
 }
+function approveTransfer(uint id) external {
+    require(transfers[id].sent == false, 'transfer has already been sent');
+    require(approvals[msg.sender][id] == false, 'cannot approve transfer twice');
+    transfers[id].approvals++;
+    if(transfers[id].approvals >= quorum) {
+        transfers[id].sent = true;
+        address payable to = transfers[id].to;
+        uint amount = transfers[id].amount;
+        to.transfer(amount);
+    }
+}
+
