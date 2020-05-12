@@ -44,4 +44,5 @@ function approveTransfer(uint id) external {
         to.transfer(amount);
     }
 }
-
+// fallback receive method
+receive() external payable {}
