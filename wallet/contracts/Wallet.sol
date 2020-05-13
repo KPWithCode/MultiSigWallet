@@ -36,6 +36,8 @@ function createTransfer(uint amount, address payable to) external onlyApprover()
 function approveTransfer(uint id) external onlyApprover() {
     require(transfers[id].sent == false, 'transfer has already been sent');
     require(approvals[msg.sender][id] == false, 'cannot approve transfer twice');
+
+    approvals[msg.sender][id] = true;
     transfers[id].approvals++;
     if(transfers[id].approvals >= quorum) {
         transfers[id].sent = true;
