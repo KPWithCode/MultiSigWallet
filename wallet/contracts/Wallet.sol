@@ -24,7 +24,7 @@ contract Wallet {
     function getTransfers()  external view returns(Transfer[] memory) {
         return transfers;
     }
-function createTransfer(uint amount, address payable to) external onlyApprover {
+function createTransfer(uint amount, address payable to) external onlyApprover() {
     transfers.push(Transfer(
       transfers.length,
       amount,
@@ -33,7 +33,7 @@ function createTransfer(uint amount, address payable to) external onlyApprover {
       false
     ));
 }
-function approveTransfer(uint id) external onlyApprover {
+function approveTransfer(uint id) external onlyApprover() {
     require(transfers[id].sent == false, 'transfer has already been sent');
     require(approvals[msg.sender][id] == false, 'cannot approve transfer twice');
     transfers[id].approvals++;
