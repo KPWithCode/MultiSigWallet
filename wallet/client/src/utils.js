@@ -4,7 +4,7 @@ import Wallet from './contracts/Wallet.json';
 const getWeb3 = () => {
     // truffle develope started at ...
     // pass url to node that runs development blockchain
-    new Web3('http://localhost:9545')
+    return new Web3('http://localhost:9545')
 };
 // contract instance
 const getWallet = async web3 => {
@@ -12,7 +12,7 @@ const getWallet = async web3 => {
     const contractDeployment = Wallet.networks[networkId];
     return new web3.eth.Contract(
         // abi
-        Wellet.abi,
+        Wallet.abi,
         // address of smart contract
         contractDeployment && contractDeployment.address
     )
