@@ -23,7 +23,7 @@ function TransferList({ transfers }) {
                             <td>{transfer.approvals}</td>
                             <td>{transfer.sent ? 'yes' : 'no' }</td>
                         </tr>
-                    ) )}
+                    ))}
                 </tbody>
             </table>
         </div>
