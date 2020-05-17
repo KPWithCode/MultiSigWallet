@@ -3,6 +3,7 @@ import { getWeb3, getWallet } from './utils';
 import Header from './Header';
 import NewTransfer from './NewTransfer';
 import TransferList from './TransferList';
+
 function App() {
   const [web3, setWeb3] = useState(undefined);
   const [accounts, setAccounts] = useState(undefined);
@@ -10,6 +11,7 @@ function App() {
   const [approvers, setApprovers]= useState(undefined);
   const [quorum, setQuorum]= useState(undefined)
   const [transfers, setTransfers] = useState([]);
+
   useEffect(() => {
     const init = async () => {
       const web3 = getWeb3();
@@ -32,6 +34,13 @@ function App() {
       // .call to read data. Use .send to modify data
       .send({from: accounts[0]});
     }
+
+    const approveTransfer = transferId => {
+      wallet.methods
+        .approveTransfer(transferId)
+        .send({from: accounts[0]});
+    }
+
   if (typeof web3 === 'undefined' 
   || typeof accounts === 'undefined' 
   || typeof wallet === 'undefined'
@@ -45,7 +54,7 @@ function App() {
       MultiSig Dapp
       <Header approvers={approvers} quorum={quorum} />
       <NewTransfer createTransfer={createTransfer} />
-      <TransferList transfers={transfers}  />
+      <TransferList transfers={transfers} approveTransfer={approveTransfer} />
     </div>
   );
 }
