@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TransferList({ transfers }) {
+function TransferList({ transfers, approveTransfer }) {
     return (
         <div>
             <h2>Transfers</h2>
@@ -20,7 +20,10 @@ function TransferList({ transfers }) {
                             <td>{transfer.id}</td>
                             <td>{transfer.amount}</td>
                             <td>{transfer.to}</td>
-                            <td>{transfer.approvals}</td>
+                            <td>
+                            {transfer.approvals}
+                            <button onClick={() => approveTransfer(transfer.id)}>Approve</button>
+                            </td>
                             <td>{transfer.sent ? 'yes' : 'no' }</td>
                         </tr>
                     ))}
