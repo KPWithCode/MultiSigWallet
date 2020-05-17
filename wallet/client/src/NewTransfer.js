@@ -22,7 +22,7 @@ function NewTransfer({createTransfer}) {
                     type="text"
                     onChange={e => updateTransfer(e, 'amount')}
                     />
-                <label htmlFor="to">Amount</label>
+                <label htmlFor="to">To</label>
                 <input 
                     id="to"
                     type="text"
