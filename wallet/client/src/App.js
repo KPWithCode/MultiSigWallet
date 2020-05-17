@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getWeb3, getWallet } from './utils';
 import Header from './Header';
+import NewTransfer from './NewTransfer';
 
 function App() {
   const [web3, setWeb3] = useState(undefined);
@@ -25,6 +26,11 @@ function App() {
     }
     init();
   },[])
+    const createTransfer = transfer => {
+      wallet.methods.createTransfer(transfer.amount, transfer.to)
+      // .call to read data. Use .send to modify data
+      .send({from: accounts[0]});
+    }
   if (typeof web3 === 'undefined' 
   || typeof accounts === 'undefined' 
   || typeof wallet === 'undefined'
@@ -37,6 +43,8 @@ function App() {
     <div>
       MultiSig Dapp
       <Header approvers={approvers} quorum={quorum} />
+      <NewTransfer createTransfer={createTransfer} />
+      
     </div>
   );
 }
