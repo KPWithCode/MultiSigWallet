@@ -10,7 +10,7 @@ function TransferList({ transfers, approveTransfer }) {
                         <th>Id</th>
                         <th>Amount</th>
                         <th>To</th>
-                        <th>Approbals</th>
+                        <th>Approvals</th>
                         <th>Sent</th>
                     </tr>
                 </thead>
