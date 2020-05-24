@@ -29,18 +29,19 @@ function App() {
     }
     init();
   },[])
+
     const createTransfer = transfer => {
       wallet.methods.createTransfer(transfer.amount, transfer.to)
       // .call to read data. Use .send to modify data
       .send({from: accounts[0]});
     }
-
+    
     const approveTransfer = transferId => {
       wallet.methods
         .approveTransfer(transferId)
         .send({from: accounts[0]});
     }
-
+    
   if (typeof web3 === 'undefined' 
   || typeof accounts === 'undefined' 
   || typeof wallet === 'undefined'
