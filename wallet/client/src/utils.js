@@ -8,11 +8,11 @@ const getWeb3 = () => {
     // integrate metamask when I need to sign a transaction(mainnet)
     return new Promise((resolve, reject) => {
         // avoids race conditions with web3 injection timing
-        window.addEventListener("load", async () => {
+        // window.addEventListener("load", async () => {
             if (window.ethereum) {
                 const web3 = new Web3(window.ethereum);
                 try {
-                    await window.ethereum.enable();
+                    window.ethereum.enable();
                     resolve(web3)
                 } catch (err) {
                     reject(err)
@@ -21,7 +21,6 @@ const getWeb3 = () => {
                 // old metamask
                 resolve(window.web3)
             }
-
             // Fallback to localhost: DEVELOPMENT
             else {
                 const provider = new Web3.providers.HttpProvider(
@@ -36,13 +35,19 @@ const getWeb3 = () => {
             //     // no metamask
             //     reject('You must install Metamask')
             // }
-        })
+        // })
     })
 };
 // contract instance
 const getWallet = async web3 => {
     const networkId = await web3.eth.net.getId();
     const deployedNetwork = Wallet.networks[networkId];
+    // if (deployedNetwork) {
+    //     const wallet = web3.eth.Contract(Wallet.abi, deployedNetwork.address)
+    //     return {wallet}
+    // } else {
+    //     window.alert('oops')
+    // }
     return new web3.eth.Contract(
         // abi
         Wallet.abi,
