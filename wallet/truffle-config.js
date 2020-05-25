@@ -45,8 +45,7 @@ module.exports = {
   networks: {
     // configure truffle to use infura with hdwallet provider
     kovan: {
-      provider: () => 
-        new provider(
+      provider: () => new provider(
           secrets.privateKeys,
           // infura url
           'https://kovan.infura.io/v3/934171d2362c465b92dfb2bcd70af0dd',
