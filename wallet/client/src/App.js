@@ -15,14 +15,14 @@ function App() {
   useEffect(() => {
     const init = async () => {
       const web3 = await getWeb3();
-      const wallet = await getWallet(web3);
       const accounts = await web3.eth.getAccounts();
+      const wallet = await getWallet(web3);
       const approvers = await wallet.methods.getApprovers().call();
       const quorum = await wallet.methods.quorum().call();
       const transfers = await wallet.methods.getTransfers().call()
       setWeb3(web3);
-      setWallet(wallet);
       setAccounts(accounts);
+      setWallet(wallet);
       setApprovers(approvers);
       setQuorum(quorum)
       setTransfers(transfers)
@@ -31,7 +31,8 @@ function App() {
   },[])
 
     const createTransfer = transfer => {
-      wallet.methods.createTransfer(transfer.amount, transfer.to)
+      wallet.methods
+      .createTransfer(transfer.amount, transfer.to)
       // .call to read data. Use .send to modify data
       .send({from: accounts[0]});
     }
